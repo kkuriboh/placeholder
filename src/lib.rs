@@ -5,10 +5,10 @@ use winit::{
     event_loop::ControlFlow,
 };
 
-use window::WindowCfg;
+use window::Window;
 
 pub fn make_win() {
-    let window_cfg = WindowCfg::new("development-window");
+    let window_cfg = Window::new();
 
     window_cfg.event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;

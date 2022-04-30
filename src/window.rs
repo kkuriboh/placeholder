@@ -1,24 +1,32 @@
-use winit::window::Window;
-use winit::platform::unix::EventLoopExtUnix;
+use winit::{
+    window::{Window as winitWindow, WindowBuilder as WinitBuilder},
+    platform::unix::EventLoopExtUnix
+};
 
-pub struct WindowCfg {
-    pub title: String,
-    pub window: Window,
-    pub event_loop: winit::event_loop::EventLoop<()>,
+pub struct Window;
+
+pub struct WindowCfg<'a> {
+    title: Option<&'a str>,
+    window: Option<Window>,
+    event_loop: Option<winit::event_loop::EventLoop<()>>,
 }
 
-impl WindowCfg {
-    pub fn new(title: &str) -> Self {
-        let event_loop = winit::event_loop::EventLoop::new_any_thread();
-        let window = winit::window::WindowBuilder::new()
-            .with_title(title)
-            .build(&event_loop)
-            .unwrap();
-
+impl<'a> WindowCfg<'a> {
+    pub fn new() -> Self {
         Self {
-            title: title.to_string(),
-            window,
-            event_loop,
+            title: None,
+            window: None,
+            event_loop: None,
         }
     }
+
+    pub fn set_title(self, title: &'a str) -> Self {
+        Self {
+            title: Some(title),
+            ..self
+        }
+    }
+
+    pub fn build(self) {}
+
 }
